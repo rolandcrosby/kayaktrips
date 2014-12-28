@@ -53,4 +53,4 @@ I use Kayak's [Trips](https://www.kayak.com/trips) functionality to track flight
 * Only parses flights right now
 * Doesn't capture any fields besides the ones shown in the output above
 * Doesn't really do any error checking
-* Probably should be further refactored, ¯\\_(ツ)_/¯
+* Probably should be further refactored, ¯\\\_(ツ)_/¯
