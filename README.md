@@ -10,6 +10,8 @@ I use Kayak's [Trips](https://www.kayak.com/trips) functionality to track flight
   cal = KayakCalendar.from_url("https://www.kayak.com/trips/ical/pbbbbbbt/what/isthis/calendar.ics")
   cal.flights
   # [<Flight DL 1473 SEA-JFK, 2014-09-18 10:59:00>, <Flight DL 443 JFK-SEA, 2014-09-22 18:45:00>, etc.]
+  cal.flights[0].airline # "DL"
+  cal.flights[0].departure_time_utc # datetime.datetime(2014, 9, 18, 17, 59, tzinfo=<UTC>)
   print cal.flights[0].json()
   # {
   #   "departure_time_local": "2014-09-18T10:59:00",
