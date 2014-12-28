@@ -27,7 +27,7 @@ class KayakCalendar(object):
 
     @classmethod
     def from_url(cls, ical_url):
-        return KayakCalendar(requests.get(ical_url).data)
+        return KayakCalendar(requests.get(ical_url).content)
 
     @classmethod
     def from_file(cls, ical_filename):
