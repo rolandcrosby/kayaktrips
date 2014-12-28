@@ -85,8 +85,3 @@ class Flight(object):
 
     def _dt_fmt(self, dt):
         return dt.strftime('%Y-%m-%d %H:%M:%S')
-
-ical_url = "https://www.kayak.com/trips/ical/uf/CzOU7f/ecd1bda6/calendar.ics"
-if __name__ == "__main__":
-    cal = KayakCalendar.from_ical_file('calendar.ics')
-    print cal.json()
