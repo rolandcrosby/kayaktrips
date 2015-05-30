@@ -2,6 +2,13 @@
 I use Kayak's [Trips](https://www.kayak.com/trips) functionality to track flights and other reservations, because it does the same thing as TripIt but looks way nicer. I wrote this Python module to get data about my past flights in JSON format.
 
 ## Usage
+### Command line utility
+1. Get your My Trips iCalendar URL from [this page](https://www.kayak.com/trips-preferences/?tfd=t)
+2. Then print JSON to STDOUT like so: `python trips.py -u https://www.kayak.com/trips/ical/pbbbbbbt/what/isthis/calendar.ics`
+
+There are other options as well, do `python trips.py -h` to see them.
+
+### As a Python module
 1. Get your My Trips iCalendar URL from [this page](https://www.kayak.com/trips-preferences/?tfd=t)
 2. Do something like this:
 

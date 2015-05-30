@@ -3,6 +3,8 @@ from datetime import datetime
 import requests
 import re
 import json
+import argparse
+import sys
 
 class CustomEncoder(json.JSONEncoder):
     def default(self, o):
@@ -30,11 +32,15 @@ class KayakCalendar(object):
         return KayakCalendar(requests.get(ical_url).content)
 
     @classmethod
-    def from_file(cls, ical_filename):
+    def from_filename(cls, ical_filename):
         with open(ical_filename, 'r') as ical_file:
-            cal = KayakCalendar(ical_file.read())
-            cal._sort_flights()
-            return cal
+            return cls.from_file(ical_file)
+
+    @classmethod
+    def from_file(cls, ical_file):
+        cal = KayakCalendar(ical_file.read())
+        cal._sort_flights()
+        return cal
 
     def _sort_flights(self):
         self.flights.sort(key=lambda f: f.departure_time_utc)
@@ -85,3 +91,31 @@ class Flight(object):
 
     def _dt_fmt(self, dt):
         return dt.strftime('%Y-%m-%d %H:%M:%S')
+
+def main():
+    parser = argparse.ArgumentParser(description="Convert your Kayak trips iCal feed to JSON", add_help=True)
+    parser.add_argument('-f', action='store', dest='in_file', help='File to load trips from')
+    parser.add_argument('-u', action='store', dest='in_url', help='URL to load trips from')
+    parser.add_argument('-o', action='store', dest='out_file', help='File to store trips in (defaults to STDOUT)')
+    args = parser.parse_args()
+    if args.in_file and args.in_url:
+        parser.error('Must specify -f or -o only')
+    if args.in_file:
+        cal = KayakCalendar.from_filename(args.in_file)
+    elif args.in_url:
+        cal = KayalCalendar.from_url(args.in_url)
+    else:
+        if sys.stdin.isatty():
+            parser.print_usage()
+            sys.exit(1)
+        cal = KayakCalendar.from_file(sys.stdin)
+    json = cal.json()
+    if args.out_file:
+        with open(args.out_file, 'w') as f:
+            f.write(json)
+    else:
+        print "heyyyyy"
+        print(json)
+
+if __name__ == "__main__":
+    main()
