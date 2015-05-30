@@ -103,7 +103,7 @@ def main():
     if args.in_file:
         cal = KayakCalendar.from_filename(args.in_file)
     elif args.in_url:
-        cal = KayalCalendar.from_url(args.in_url)
+        cal = KayakCalendar.from_url(args.in_url)
     else:
         if sys.stdin.isatty():
             parser.print_usage()
