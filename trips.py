@@ -114,7 +114,6 @@ def main():
         with open(args.out_file, 'w') as f:
             f.write(json)
     else:
-        print "heyyyyy"
         print(json)
 
 if __name__ == "__main__":
