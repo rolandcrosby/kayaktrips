@@ -55,12 +55,16 @@ class Flight(object):
         self.departure_airport, self.departure_time_local = self._parse_description_line(departing)
         arriving = self._first_with_prefix(description, "Arriving")
         self.arrival_airport, self.arrival_time_local = self._parse_description_line(arriving)
+        self.description = str(self)
 
     def json(self):
         return json.dumps(self.__dict__, cls=CustomEncoder, indent=4)
 
+    def __str__(self):
+        return "%s %d %s-%s, %s" % (self.airline, self.flight_number, self.departure_airport, self.arrival_airport, self._date_fmt(self.departure_time_local))
+
     def __repr__(self):
-        return "<Flight %s %d %s-%s, %s>" % (self.airline, self.flight_number, self.departure_airport, self.arrival_airport, self._dt_fmt(self.departure_time_local))
+        return "<Flight %s %d %s-%s, %s>" % (self.airline, self.flight_number, self.departure_airport, self.arrival_airport, self._datetime_fmt(self.departure_time_local))
 
     def _parse_summary(self, summary):
         m = re.match('.*Flight ([A-Z0-9]{2})? (\d+)', summary)
@@ -89,7 +93,10 @@ class Flight(object):
         else:
             return default
 
-    def _dt_fmt(self, dt):
+    def _date_fmt(self, dt):
+        return dt.strftime('%Y-%m-%d')
+
+    def _datetime_fmt(self, dt):
         return dt.strftime('%Y-%m-%d %H:%M:%S')
 
 def main():
