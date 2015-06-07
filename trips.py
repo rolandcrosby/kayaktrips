@@ -47,6 +47,7 @@ class KayakCalendar(object):
 
 class Flight(object):
     def __init__(self, ical_event):
+        self.type = "flight"
         self.airline, self.flight_number = self._parse_summary(ical_event.decoded('summary'))
         self.departure_time_utc = ical_event.decoded('dtstart')
         self.arrival_time_utc = ical_event.decoded('dtend')
