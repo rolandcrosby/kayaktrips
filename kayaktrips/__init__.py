@@ -1,4 +1,4 @@
-from icalendar import Calendar, Event
+import icalendar as ical
 from datetime import datetime
 import requests
 import re
@@ -12,10 +12,10 @@ class CustomEncoder(json.JSONEncoder):
             return o.isoformat()
         return json.JSONEncoder.default(self, o)
 
-class KayakCalendar(object):
+class Calendar:
     def __init__(self, ical_string):
         self.flights = []
-        ical_data = Calendar.from_ical(ical_string)
+        ical_data = ical.Calendar.from_ical(ical_string)
         flights = filter(lambda x: ' - Flight ' in x.decoded('summary'), ical_data.subcomponents)
         for f in flights:
             self.add_flight(Flight(ical_event=f))
@@ -29,7 +29,7 @@ class KayakCalendar(object):
 
     @classmethod
     def from_url(cls, ical_url):
-        return KayakCalendar(requests.get(ical_url).content)
+        return Calendar(requests.get(ical_url).content)
 
     @classmethod
     def from_filename(cls, ical_filename):
@@ -38,7 +38,7 @@ class KayakCalendar(object):
 
     @classmethod
     def from_file(cls, ical_file):
-        cal = KayakCalendar(ical_file.read())
+        cal = Calendar(ical_file.read())
         cal._sort_flights()
         return cal
 
@@ -109,14 +109,14 @@ def main():
     if args.in_file and args.in_url:
         parser.error('Must specify -f or -o only')
     if args.in_file:
-        cal = KayakCalendar.from_filename(args.in_file)
+        cal = Calendar.from_filename(args.in_file)
     elif args.in_url:
-        cal = KayakCalendar.from_url(args.in_url)
+        cal = Calendar.from_url(args.in_url)
     else:
         if sys.stdin.isatty():
             parser.print_usage()
             sys.exit(1)
-        cal = KayakCalendar.from_file(sys.stdin)
+        cal = Calendar.from_file(sys.stdin)
     json = cal.json()
     if args.out_file:
         with open(args.out_file, 'w') as f:

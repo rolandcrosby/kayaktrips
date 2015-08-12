@@ -4,9 +4,9 @@ I use Kayak's [Trips](https://www.kayak.com/trips) functionality to track flight
 ## Usage
 ### Command line utility
 1. Get your My Trips iCalendar URL from [this page](https://www.kayak.com/trips-preferences/?tfd=t)
-2. Then print JSON to STDOUT like so: `python trips.py -u https://www.kayak.com/trips/ical/pbbbbbbt/what/isthis/calendar.ics`
+2. Then print JSON to STDOUT like so: `python -m kayaktrips -u https://www.kayak.com/trips/ical/pbbbbbbt/what/isthis/calendar.ics`
 
-There are other options as well, do `python trips.py -h` to see them.
+There are other options as well, do `python -m kayaktrips -h` to see them.
 
 ### As a Python module
 1. Get your My Trips iCalendar URL from [this page](https://www.kayak.com/trips-preferences/?tfd=t)

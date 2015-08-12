@@ -1,0 +1,3 @@
+import kayaktrips
+
+kayaktrips.main()
