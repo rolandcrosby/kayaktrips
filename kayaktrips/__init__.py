@@ -83,6 +83,8 @@ class Flight(object):
         day = int(m.group(2))
         hour = int(m.group(4))
         minute = int(m.group(5))
+        if m.group(6) == "AM" and hour == 12:
+            hour = 0
         if m.group(6) == "PM" and hour != 12:
             hour = hour + 12
         return (airport_code, datetime(year, month, day, hour, minute))
